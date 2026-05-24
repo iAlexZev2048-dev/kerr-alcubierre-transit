@@ -7,6 +7,9 @@ This repository contains a high-fidelity numerical simulation framework for a sp
 
 The transition is mediated by a smooth $C^\infty$ partition of unity (bump function) in the proper time $\tau$ of a co-moving observer. A critical contribution of this codebase is the implementation and stabilization of an **adaptive PID controller** that regulates active metric expansion and contraction during Phase 3 (topological rupture), preventing coordinate singularities and ensuring chart regularity.
 
+> **Cita de Honor / Credit Note:**
+> Este proyecto se basa en los fundamentos teóricos establecidos por R.P. Kerr (1963) sobre métricas de agujeros negros en rotación y M. Alcubierre (1994) sobre propulsión métrica. Esta arquitectura SCT (Smooth Causal Transit) es un desarrollo independiente que aplica principios de control PID y funciones de partición $C^\infty$ para la estabilización numérica de estas soluciones.
+
 For a detailed physical, mathematical, and numerical analysis of this system, refer to the accompanying paper: **[INFORME_VIABILIDAD.md](file:///c:/Users/alex_/Documents/ciencia%20&%20sci%20fi/INFORME_VIABILIDAD.md)** (*English*).
 
 ---
