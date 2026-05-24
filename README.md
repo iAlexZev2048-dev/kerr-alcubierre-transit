@@ -85,7 +85,7 @@ If you use this simulation code or build upon the theoretical framework in your 
   publisher    = {Zenodo},
   version      = {1.0.0},
   doi          = {10.5281/zenodo.1234567},
-  url          = {https://github.com/alexbrandonzf/kerr-alcubierre-transit}
+  url          = {https://github.com/iAlexZev2048-dev/kerr-alcubierre-transit}
 }
 ```
 

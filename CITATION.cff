@@ -7,8 +7,8 @@ title: "Smooth Metric Transition in Ergospheric Spacetime: Kerr-Alcubierre Hando
 version: "1.0.0"
 doi: "10.5281/zenodo.1234567" # Place your Zenodo DOI here once published
 date-released: "2026-05-23"
-url: "https://github.com/alexbrandonzf/kerr-alcubierre-transit" # Replace with your actual repository URL
+url: "https://github.com/iAlexZev2048-dev/kerr-alcubierre-transit"
 license: "MIT"
-repository-code: "https://github.com/alexbrandonzf/kerr-alcubierre-transit"
+repository-code: "https://github.com/iAlexZev2048-dev/kerr-alcubierre-transit"
 abstract: >-
   A numerical simulation of a smooth transition between the Kerr metric of a rotating black hole and the Alcubierre warp metric, stabilized by an adaptive PID controller. The code is implemented using only the Python standard library.
