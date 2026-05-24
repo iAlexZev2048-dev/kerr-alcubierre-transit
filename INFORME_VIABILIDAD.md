@@ -324,3 +324,10 @@ All source code is available in the project directory and depends exclusively on
 python simulacion_completa.py    # → simulacion_completa.csv (61 steps)
 python -m unittest tests/test_motor.py -v   # 9/9 tests pass
 ```
+
+---
+
+## Author Declaration & AI Disclosure
+
+This project is an original work by Alex Brandon Zevallos Flores. For the implementation of the simulation architecture, the resolution of numerical divergences in the PID control loop, and the drafting of this technical report, generative artificial intelligence (Gemini) was utilized as an assistant for technical development and mathematical concept translation. The author remains fully responsible for the overall architecture, physical validation, and logical integrity of the system.
+

@@ -97,3 +97,12 @@ If you use this simulation code or build upon the theoretical framework in your 
 ## ⚖️ License
 - The **source code** is licensed under the [MIT License](LICENSE).
 - The **viability report** (`INFORME_VIABILIDAD.md`) is licensed under the [Creative Commons Attribution 4.0 International (CC-BY-4.0)](https://creativecommons.org/licenses/by/4.0/) license.
+
+---
+
+## 📝 Declaración de Autoría / Author Declaration
+
+**Declaración de Autoría:** Este proyecto es una obra original de Alex Brandon Zevallos Flores. Para la implementación de la arquitectura de simulación, la resolución de divergencias en el lazo de control PID y la redacción de este informe técnico, se utilizó inteligencia artificial (Gemini) como herramienta de asistencia técnica y traducción de conceptos matemáticos. El autor es responsable de toda la arquitectura, la validación física y la integridad lógica del sistema.
+
+**AI Disclosure:** This project is an original work by Alex Brandon Zevallos Flores. For the implementation of the simulation architecture, the resolution of numerical divergences in the PID control loop, and the drafting of this technical report, generative artificial intelligence (Gemini) was utilized as an assistant for technical development and mathematical concept translation. The author remains fully responsible for the overall architecture, physical validation, and logical integrity of the system.
+
