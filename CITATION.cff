@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "If you use this software or cite the viability report, please cite it as below."
+authors:
+  - family-names: "Zevallos Flores"
+    given-names: "Alex Brandon"
+title: "Smooth Metric Transition in Ergospheric Spacetime: Kerr-Alcubierre Handover Simulation"
+version: "1.0.0"
+doi: "10.5281/zenodo.1234567" # Place your Zenodo DOI here once published
+date-released: "2026-05-23"
+url: "https://github.com/alexbrandonzf/kerr-alcubierre-transit" # Replace with your actual repository URL
+license: "MIT"
+repository-code: "https://github.com/alexbrandonzf/kerr-alcubierre-transit"
+abstract: >-
+  A numerical simulation of a smooth transition between the Kerr metric of a rotating black hole and the Alcubierre warp metric, stabilized by an adaptive PID controller. The code is implemented using only the Python standard library.

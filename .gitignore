@@ -1,0 +1,24 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# OS-specific
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Temporary files (MS Office lock files, etc.)
+~$*.docx
+
+# Generated data and outputs
+simulacion_completa.csv
+sweep_det_results.csv
+umbrales_calibrados.ini
+motor_config.json
+
+# Personal media files (just in case)
+*.jpg
+*.jpeg
+*.png
+*.gif
