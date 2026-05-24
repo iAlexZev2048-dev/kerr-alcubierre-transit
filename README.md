@@ -1,6 +1,6 @@
 # Ergosphere-Alcubierre Metric Transition & PID Control Simulation
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1234567.svg)](https://doi.org/10.5281/zenodo.1234567)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20360989.svg)](https://doi.org/10.5281/zenodo.20360989)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 This repository contains a high-fidelity numerical simulation framework for a speculative spacetime transition: a causal handover between a rotating **Kerr Black Hole Ergosphere** and a translating **Alcubierre Warp Bubble**.
@@ -84,13 +84,13 @@ If you use this simulation code or build upon the theoretical framework in your 
   year         = 2026,
   publisher    = {Zenodo},
   version      = {1.0.0},
-  doi          = {10.5281/zenodo.1234567},
+  doi          = {10.5281/zenodo.20360989},
   url          = {https://github.com/iAlexZev2048-dev/kerr-alcubierre-transit}
 }
 ```
 
 ### APA
-> Zevallos Flores, A. B. (2026). *Smooth Metric Transition in Ergospheric Spacetime: Kerr-Alcubierre Handover Simulation* (Version 1.0.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.1234567
+> Zevallos Flores, A. B. (2026). *Smooth Metric Transition in Ergospheric Spacetime: Kerr-Alcubierre Handover Simulation* (Version 1.0.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.20360989
 
 ---
 

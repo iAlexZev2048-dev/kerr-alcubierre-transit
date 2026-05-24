@@ -5,7 +5,7 @@ authors:
     given-names: "Alex Brandon"
 title: "Smooth Metric Transition in Ergospheric Spacetime: Kerr-Alcubierre Handover Simulation"
 version: "1.0.0"
-doi: "10.5281/zenodo.1234567" # Place your Zenodo DOI here once published
+doi: "10.5281/zenodo.20360989"
 date-released: "2026-05-23"
 url: "https://github.com/iAlexZev2048-dev/kerr-alcubierre-transit"
 license: "MIT"
