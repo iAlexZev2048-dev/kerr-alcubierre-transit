@@ -10,7 +10,7 @@ The transition is mediated by a smooth $C^\infty$ partition of unity (bump funct
 > **Cita de Honor / Credit Note:**
 > Este proyecto se basa en los fundamentos teóricos establecidos por R.P. Kerr (1963) sobre métricas de agujeros negros en rotación y M. Alcubierre (1994) sobre propulsión métrica. Esta arquitectura SCT (Smooth Causal Transit) es un desarrollo independiente que aplica principios de control PID y funciones de partición $C^\infty$ para la estabilización numérica de estas soluciones.
 
-For a detailed physical, mathematical, and numerical analysis of this system, refer to the accompanying paper: **[INFORME_VIABILIDAD.md](file:///c:/Users/alex_/Documents/ciencia%20&%20sci%20fi/INFORME_VIABILIDAD.md)** (*English*).
+For a detailed physical, mathematical, and numerical analysis of this system, refer to the accompanying paper: **[FEASIBILITY_REPORT.md](file:///c:/Users/alex_/Documents/ciencia%20&%20sci%20fi/FEASIBILITY_REPORT.md)**.
 
 ---
 
@@ -96,7 +96,7 @@ If you use this simulation code or build upon the theoretical framework in your 
 
 ## License
 - The **source code** is licensed under the [MIT License](LICENSE).
-- The **viability report** (`INFORME_VIABILIDAD.md`) is licensed under the [Creative Commons Attribution 4.0 International (CC-BY-4.0)](https://creativecommons.org/licenses/by/4.0/) license.
+- The **feasibility report** (`FEASIBILITY_REPORT.md`) is licensed under the [Creative Commons Attribution 4.0 International (CC-BY-4.0)](https://creativecommons.org/licenses/by/4.0/) license.
 
 ---
 
