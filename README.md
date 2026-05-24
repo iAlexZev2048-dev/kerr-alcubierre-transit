@@ -14,7 +14,7 @@ For a detailed physical, mathematical, and numerical analysis of this system, re
 
 ---
 
-## 🌌 Physical & Numerical Concept
+## Physical & Numerical Concept
 
 The simulation models a four-phase causal transit protocol:
 1. **Calibration (Phase 0):** Establishes metric determinant baselines and parameters.
@@ -24,7 +24,7 @@ The simulation models a four-phase causal transit protocol:
 
 ---
 
-## 🛠️ Software Architecture
+## Software Architecture
 
 This project is written entirely using the **Python Standard Library** (no external package dependencies) to maximize portability and longevity in archive systems like Zenodo.
 
@@ -45,7 +45,7 @@ This project is written entirely using the **Python Standard Library** (no exter
 
 ---
 
-## 🚀 Execution & Quick Start
+## Execution & Quick Start
 
 ### 1. Run the Full Simulation
 Execute the orchestration script. This runs parameter sweeps, calibrates thresholds, runs the 5-phase transition, and writes telemetry to `simulacion_completa.csv`:
@@ -70,7 +70,7 @@ python -m unittest tests/test_motor.py -v
 
 ---
 
-## 📝 Citation & Academic Attribution
+## Citation & Academic Attribution
 
 If you use this simulation code or build upon the theoretical framework in your research, please cite it using the following metadata:
 
@@ -94,13 +94,13 @@ If you use this simulation code or build upon the theoretical framework in your 
 
 ---
 
-## ⚖️ License
+## License
 - The **source code** is licensed under the [MIT License](LICENSE).
 - The **viability report** (`INFORME_VIABILIDAD.md`) is licensed under the [Creative Commons Attribution 4.0 International (CC-BY-4.0)](https://creativecommons.org/licenses/by/4.0/) license.
 
 ---
 
-## 📝 Declaración de Autoría / Author Declaration
+## Declaración de Autoría / Author Declaration
 
 **Declaración de Autoría:** Este proyecto es una obra original de Alex Brandon Zevallos Flores. Para la implementación de la arquitectura de simulación, la resolución de divergencias en el lazo de control PID y la redacción de este informe técnico, se utilizó inteligencia artificial (Gemini) como herramienta de asistencia técnica y traducción de conceptos matemáticos. El autor es responsable de toda la arquitectura, la validación física y la integridad lógica del sistema.
 
