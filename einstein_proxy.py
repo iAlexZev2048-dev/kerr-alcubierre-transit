@@ -1,7 +1,7 @@
 """
-Proxy de T_μν a partir de g_μν (orden linealizado / traza).
-No sustituye relatividad numérica; alimenta el lazo de control con objetivos
-coherentes con la métrica efectiva medida.
+T_μν proxy from g_μν (linearized order / trace).
+Does not replace numerical relativity; feeds the control loop with targets
+consistent with the measured effective metric.
 """
 
 from __future__ import annotations
@@ -10,25 +10,25 @@ import math
 from dataclasses import dataclass
 from typing import Sequence
 
-from control_motor import Tensor, blend_tensor
-from transicion_metrica import det_4x4, psi_tau
+from engine_control import Tensor, blend_tensor
+from metric_transition import det_4x4, psi_tau
 
 Matrix4 = list[list[float]]
 COUPLING = 1.0 / (8.0 * math.pi)  # 8πG, G=c=1
 
 
 @dataclass
-class CondicionesEnergia:
-    """Violaciones de condiciones de energía (signos de ρ y traza)."""
+class EnergyConditions:
+    """Violations of energy conditions (signs of ρ and trace)."""
 
     rho: float
-    traza_P: float
-    viola_WEC: bool
-    viola_NEC: bool
-    viola_SEC: bool
+    trace_P: float
+    violates_WEC: bool
+    violates_NEC: bool
+    violates_SEC: bool
 
 
-def minkowski_cart() -> Matrix4:
+def minkowski_cartesian() -> Matrix4:
     return [
         [-1.0, 0.0, 0.0, 0.0],
         [0.0, 1.0, 0.0, 0.0],
@@ -38,8 +38,8 @@ def minkowski_cart() -> Matrix4:
 
 
 def tensor_from_matrix(g: Matrix4) -> Tensor:
-    """Extrae proxy escalar de T desde perturbación h = g − η."""
-    eta = minkowski_cart()
+    """Extracts scalar proxy of T from perturbation h = g − η."""
+    eta = minkowski_cartesian()
     h00 = g[0][0] - eta[0][0]
     hxx = g[1][1] - eta[1][1]
     hyy = g[2][2] - eta[2][2]
@@ -60,7 +60,7 @@ def T_from_g(g: Matrix4) -> Tensor:
     return tensor_from_matrix(g)
 
 
-def T_efectivo_desde_mezcla(
+def effective_T_from_blend(
     g_kerr: Matrix4,
     g_alc: Matrix4,
     tau: float,
@@ -73,21 +73,21 @@ def T_efectivo_desde_mezcla(
     return blend_tensor(w, t_k, t_a)
 
 
-def condiciones_energia(t: Tensor, n_timelike: tuple[float, float, float, float] = (1.0, 0.0, 0.0, 0.0)) -> CondicionesEnergia:
-    """Comprueba WEC/NEC/SEC en orden de magnitud para el proxy."""
+def energy_conditions(t: Tensor, n_timelike: tuple[float, float, float, float] = (1.0, 0.0, 0.0, 0.0)) -> EnergyConditions:
+    """Checks WEC/NEC/SEC in order of magnitude for the proxy."""
     nx, ny, nz = n_timelike[1], n_timelike[2], n_timelike[3]
-    traza_P = t.T_xx + t.T_yy + t.T_zz
+    trace_P = t.T_xx + t.T_yy + t.T_zz
     nec = t.rho
-    sec = t.rho + traza_P
-    return CondicionesEnergia(
+    sec = t.rho + trace_P
+    return EnergyConditions(
         rho=t.rho,
-        traza_P=traza_P,
-        viola_WEC=t.rho < 0,
-        viola_NEC=nec < 0,
-        viola_SEC=sec < 0,
+        trace_P=trace_P,
+        violates_WEC=t.rho < 0,
+        violates_NEC=nec < 0,
+        violates_SEC=sec < 0,
     )
 
 
-def curvatura_proxy(g: Matrix4) -> float:
-    """|R| ~ |det(g) − det(η)| como escalar operativo de curvatura."""
+def curvature_proxy(g: Matrix4) -> float:
+    """|R| ~ |det(g) − det(η)| as an operational curvature scalar."""
     return abs(det_4x4(g) + 1.0)

@@ -30,42 +30,42 @@ This project is written entirely using the **Python Standard Library** (no exter
 
 | Module | Purpose |
 | :--- | :--- |
-| **[transicion_metrica.py](file:///c:/Users/alex_/Documents/ciencia%20&%20sci%20fi/transicion_metrica.py)** | $C^\infty$ bump function $\psi(z)$, metric blending algebra, and $4 \times 4$ determinant math. |
-| **[metricas_motor.py](file:///c:/Users/alex_/Documents/ciencia%20&%20sci%20fi/metricas_motor.py)** | Kerr and Alcubierre metric implementations in a shared chart, coordinate transformations, and parameter sweeps. |
-| **[control_motor.py](file:///c:/Users/alex_/Documents/ciencia%20&%20sci%20fi/control_motor.py)** | Core adaptive PID controller logic with anti-windup, noise filtering, and step synchronization. |
-| **[control_motor.cpp](file:///c:/Users/alex_/Documents/ciencia%20&%20sci%20fi/control_motor.cpp)** / **[control_motor.hpp](file:///c:/Users/alex_/Documents/ciencia%20&%20sci%20fi/control_motor.hpp)** | High-performance C++ mirror of the PID control loop. |
+| **[metric_transition.py](file:///c:/Users/alex_/Documents/ciencia%20&%20sci%20fi/metric_transition.py)** | $C^\infty$ bump function $\psi(z)$, metric blending algebra, and $4 \times 4$ determinant math. |
+| **[engine_metrics.py](file:///c:/Users/alex_/Documents/ciencia%20&%20sci%20fi/engine_metrics.py)** | Kerr and Alcubierre metric implementations in a shared chart, coordinate transformations, and parameter sweeps. |
+| **[engine_control.py](file:///c:/Users/alex_/Documents/ciencia%20&%20sci%20fi/engine_control.py)** | Core adaptive PID controller logic with anti-windup, noise filtering, and step synchronization. |
+| **[engine_control.cpp](file:///c:/Users/alex_/Documents/ciencia%20&%20sci%20fi/engine_control.cpp)** / **[engine_control.hpp](file:///c:/Users/alex_/Documents/ciencia%20&%20sci%20fi/engine_control.hpp)** | High-performance C++ mirror of the PID control loop. |
 | **[einstein_proxy.py](file:///c:/Users/alex_/Documents/ciencia%20&%20sci%20fi/einstein_proxy.py)** | Linearized Einstein tensor $G_{\mu\nu}$ and stress-energy $T_{\mu\nu}$ proxy to monitor energy conditions (WEC/SEC/DEC). |
-| **[fases_motor.py](file:///c:/Users/alex_/Documents/ciencia%20&%20sci%20fi/fases_motor.py)** | State machine managing transition phases (0 to 4) and safety interrupts. |
+| **[engine_phases.py](file:///c:/Users/alex_/Documents/ciencia%20&%20sci%20fi/engine_phases.py)** | State machine managing transition phases (0 to 4) and safety interrupts. |
 | **[tau_crit.py](file:///c:/Users/alex_/Documents/ciencia%20&%20sci%20fi/tau_crit.py)** | Computes critical proper time thresholds for causal injection safety. |
-| **[presupuesto_energia.py](file:///c:/Users/alex_/Documents/ciencia%20&%20sci%20fi/presupuesto_energia.py)** | Penrose extraction efficiency and Alcubierre negative mass-energy requirements. |
-| **[calibracion.py](file:///c:/Users/alex_/Documents/ciencia%20&%20sci%20fi/calibracion.py)** | Calibrates control thresholds using simulation sweeps. |
-| **[simulacion_completa.py](file:///c:/Users/alex_/Documents/ciencia%20&%20sci%20fi/simulacion_completa.py)** | Orchestrates the entire pipeline from calibration to final simulation output. |
-| **[visualizar_resultados.py](file:///c:/Users/alex_/Documents/ciencia%20&%20sci%20fi/visualizar_resultados.py)** | Interactive GUI telemetry visualizer (built on Tkinter/Canvas, zero external requirements). |
-| **[tests/test_motor.py](file:///c:/Users/alex_/Documents/ciencia%20&%20sci%20fi/tests/test_motor.py)** | Comprehensive unit test suite (9 test cases covering metrics, PID, and state transitions). |
+| **[energy_budget.py](file:///c:/Users/alex_/Documents/ciencia%20&%20sci%20fi/energy_budget.py)** | Penrose extraction efficiency and Alcubierre negative mass-energy requirements. |
+| **[calibration.py](file:///c:/Users/alex_/Documents/ciencia%20&%20sci%20fi/calibration.py)** | Calibrates control thresholds using simulation sweeps. |
+| **[complete_simulation.py](file:///c:/Users/alex_/Documents/ciencia%20&%20sci%20fi/complete_simulation.py)** | Orchestrates the entire pipeline from calibration to final simulation output. |
+| **[visualize_results.py](file:///c:/Users/alex_/Documents/ciencia%20&%20sci%20fi/visualize_results.py)** | Interactive GUI telemetry visualizer (built on Tkinter/Canvas, zero external requirements). |
+| **[tests/test_engine.py](file:///c:/Users/alex_/Documents/ciencia%20&%20sci%20fi/tests/test_engine.py)** | Comprehensive unit test suite (9 test cases covering metrics, PID, and state transitions). |
 
 ---
 
 ## Execution & Quick Start
 
 ### 1. Run the Full Simulation
-Execute the orchestration script. This runs parameter sweeps, calibrates thresholds, runs the 5-phase transition, and writes telemetry to `simulacion_completa.csv`:
+Execute the orchestration script. This runs parameter sweeps, calibrates thresholds, runs the 5-phase transition, and writes telemetry to `complete_simulation.csv`:
 
 ```bash
-python simulacion_completa.py
+python complete_simulation.py
 ```
 
 ### 2. View Telemetry Plots
 Launch the zero-dependency Tkinter UI to inspect metric determinants, coordinate velocities, control inputs, and energy conditions:
 
 ```bash
-python visualizar_resultados.py
+python visualize_results.py
 ```
 
 ### 3. Run Unit Tests
 Verify mathematical and logical consistency across all modules:
 
 ```bash
-python -m unittest tests/test_motor.py -v
+python -m unittest tests/test_engine.py -v
 ```
 
 ---

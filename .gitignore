@@ -12,10 +12,10 @@ Desktop.ini
 ~$*.docx
 
 # Generated data and outputs
-simulacion_completa.csv
+complete_simulation.csv
 sweep_det_results.csv
 umbrales_calibrados.ini
-motor_config.json
+engine_config.json
 
 # Personal media files (just in case)
 *.jpg

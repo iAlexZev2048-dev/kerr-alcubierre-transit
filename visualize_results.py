@@ -1,6 +1,6 @@
 """
-Visualizador de Telemetría Sci-Fi para el Motor Causal.
-Usa únicamente la biblioteca estándar (Tkinter) para dibujar gráficos sin dependencias.
+Sci-Fi Telemetry Visualizer for the Causal Engine.
+Uses only the standard library (Tkinter) to draw plots without dependencies.
 """
 
 from __future__ import annotations
@@ -10,7 +10,7 @@ import tkinter as tk
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-CSV_FILE = ROOT / "simulacion_completa.csv"
+CSV_FILE = ROOT / "complete_simulation.csv"
 
 
 class TelemetryVisualizer:
@@ -20,10 +20,10 @@ class TelemetryVisualizer:
         self.root.geometry("1000x750")
         self.root.configure(bg="#0d0e15")
 
-        # Leer datos
+        # Read data
         self.data = self.read_telemetry()
         if not self.data:
-            self.show_error("No se encontró 'simulacion_completa.csv'. Ejecuta primero 'python simulacion_completa.py'.")
+            self.show_error("No 'complete_simulation.csv' found. Run 'python complete_simulation.py' first.")
             return
 
         self.setup_ui()
@@ -39,13 +39,13 @@ class TelemetryVisualizer:
                 for row in reader:
                     data.append({
                         "tau": float(row["tau"]),
-                        "fase": row["fase"],
+                        "phase": row["phase"],
                         "g_tt": float(row["g_tt"]),
                         "det_g": float(row["det_g"]),
                         "f_GHz": float(row["f_GHz"]),
-                        "lastre": float(row["lastre"]),
+                        "ballast": float(row["ballast"]),
                         "rho": float(row["rho"]),
-                        "emergencia": row["emergencia"] == "True",
+                        "emergency": row["emergency"] == "True",
                     })
             return data
         except Exception:
@@ -63,7 +63,7 @@ class TelemetryVisualizer:
         label.pack(expand=True)
 
     def setup_ui(self) -> None:
-        # Título estilo terminal sci-fi
+        # Sci-Fi terminal style title
         title_frame = tk.Frame(self.root, bg="#0d0e15", bd=0)
         title_frame.pack(fill=tk.X, pady=10, padx=20)
 
@@ -85,21 +85,21 @@ class TelemetryVisualizer:
         )
         subtitle.pack(side=tk.RIGHT, pady=5)
 
-        # Contenedor de gráficos (2x2 Grid)
+        # Plot Container (2x2 Grid)
         grid_frame = tk.Frame(self.root, bg="#0d0e15")
         grid_frame.pack(fill=tk.BOTH, expand=True, padx=20, pady=5)
 
-        # Gráfico 1: g_tt e Inversión Temporal
-        self.canvas_g_tt = self.create_plot_canvas(grid_frame, "g_tt (Curvatura Temporal)", 0, 0)
-        # Gráfico 2: det(g) (Estabilidad del Chart)
-        self.canvas_det = self.create_plot_canvas(grid_frame, "det(g_eff) (Volumen Métrico)", 0, 1)
-        # Gráfico 3: rho (Densidad de Energía Exótica)
-        self.canvas_rho = self.create_plot_canvas(grid_frame, "ρ (Densidad de Energía Exótica)", 1, 0)
-        # Gráfico 4: Frecuencia de Anillos y Lastre
-        self.canvas_actuators = self.create_plot_canvas(grid_frame, "Actuadores: f_anillos (Cian) y Lastre (Verde)", 1, 1)
+        # Plot 1: g_tt and Time Inversion
+        self.canvas_g_tt = self.create_plot_canvas(grid_frame, "g_tt (Temporal Curvature)", 0, 0)
+        # Plot 2: det(g) (Chart Stability)
+        self.canvas_det = self.create_plot_canvas(grid_frame, "det(g_eff) (Metric Volume)", 0, 1)
+        # Plot 3: rho (Exotic Energy Density)
+        self.canvas_rho = self.create_plot_canvas(grid_frame, "ρ (Exotic Energy Density)", 1, 0)
+        # Plot 4: Ring Frequency and Ballast
+        self.canvas_actuators = self.create_plot_canvas(grid_frame, "Actuators: f_rings (Cyan) and Ballast (Green)", 1, 1)
 
-        # Dibujar datos
-        self.root.update() # Asegurar dimensiones correctas de los canvas
+        # Draw data
+        self.root.update()  # Ensure correct dimensions of the canvas
         self.plot_all()
 
     def create_plot_canvas(self, parent: tk.Frame, title: str, row: int, col: int) -> tk.Canvas:
@@ -128,24 +128,24 @@ class TelemetryVisualizer:
         # Plot 1: g_tt
         g_tts = [d["g_tt"] for d in self.data]
         self.draw_curve(self.canvas_g_tt, taus, g_tts, min_tau, max_tau, "#ff007f")
-        # Marcar línea cero en g_tt
+        # Mark zero line in g_tt
         self.draw_horizontal_ref(self.canvas_g_tt, g_tts, 0.0, "#555555")
 
         # Plot 2: det(g)
         dets = [d["det_g"] for d in self.data]
         self.draw_curve(self.canvas_det, taus, dets, min_tau, max_tau, "#bf00ff")
 
-        # Plot 3: rho (Densidad de Energía Exótica)
+        # Plot 3: rho (Exotic Energy Density)
         rhos = [d["rho"] for d in self.data]
         self.draw_curve(self.canvas_rho, taus, rhos, min_tau, max_tau, "#39ff14")
         self.draw_horizontal_ref(self.canvas_rho, rhos, 0.0, "#555555")
 
-        # Plot 4: Anillos (f_GHz) y Lastre (kg/s)
+        # Plot 4: Rings (f_GHz) and Ballast (kg/s)
         fs = [d["f_GHz"] for d in self.data]
-        lastres = [d["lastre"] for d in self.data]
+        ballasts = [d["ballast"] for d in self.data]
         
         self.draw_curve(self.canvas_actuators, taus, fs, min_tau, max_tau, "#00f0ff")
-        self.draw_curve(self.canvas_actuators, taus, lastres, min_tau, max_tau, "#39ff14", secondary=True)
+        self.draw_curve(self.canvas_actuators, taus, ballasts, min_tau, max_tau, "#39ff14", secondary=True)
 
     def draw_horizontal_ref(self, canvas: tk.Canvas, y_data: list[float], ref_val: float, color: str) -> None:
         w = canvas.winfo_width()
@@ -164,11 +164,11 @@ class TelemetryVisualizer:
         
         min_y, max_y = min(y_data), max(y_data)
         
-        # Evitar divisiones por cero
+        # Avoid division by zero
         range_x = (max_x - min_x) if max_x != min_x else 1.0
         range_y = (max_y - min_y) if max_y != min_y else 1.0
 
-        # Dibujar cuadrícula de fondo
+        # Draw background grid
         if not secondary:
             for i in range(1, 5):
                 grid_x = (w / 5) * i
@@ -182,17 +182,17 @@ class TelemetryVisualizer:
             py = h - ((y - min_y) / range_y) * h
             points.append((px, py))
 
-        # Dibujar líneas de unión
+        # Draw lines
         for i in range(len(points) - 1):
             x1, y1 = points[i]
             x2, y2 = points[i+1]
             canvas.create_line(x1, y1, x2, y2, fill=color, width=2)
             
-        # Dibujar puntos
+        # Draw ovals
         for px, py in points:
             canvas.create_oval(px - 3, py - 3, px + 3, py + 3, fill=color, outline="#ffffff")
 
-        # Leyendas de texto en las esquinas del canvas
+        # Labels in corners
         if not secondary:
             canvas.create_text(15, 10, text=f"Max: {max_y:.2e}", fill="#888888", anchor="w", font=("Consolas", 8))
             canvas.create_text(15, h - 10, text=f"Min: {min_y:.2e}", fill="#888888", anchor="w", font=("Consolas", 8))

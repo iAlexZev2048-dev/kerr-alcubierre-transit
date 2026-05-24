@@ -1,5 +1,5 @@
 """
-Detección operativa de τ_crit (inyección causal / inversión temporal local).
+Operational detection of τ_crit (causal injection / local time inversion).
 """
 
 from __future__ import annotations
@@ -8,33 +8,33 @@ import math
 from dataclasses import dataclass
 from enum import Enum, auto
 
-from metricas_motor import InjectionSite, metrics_in_ship_chart
-from transicion_metrica import det_4x4, z_phase
+from engine_metrics import InjectionSite, metrics_in_ship_chart
+from metric_transition import det_4x4, z_phase
 
 
-class SenalCausal(Enum):
+class CausalSignal(Enum):
     NORMAL = auto()
-    ERGOSFERA = auto()
-    CONO_CERRADO = auto()
-    INVERSION_TEMPORAL = auto()
+    ERGOSPHERE = auto()
+    CLOSED_CONE = auto()
+    TIME_INVERSION = auto()
 
 
 @dataclass
-class EstadoCausal:
-    senal: SenalCausal
+class CausalState:
+    signal: CausalSignal
     g_tt: float
-    ds2_tangente: float
-    ratio_reloj: float
+    tangent_ds2: float
+    clock_ratio: float
     det_g: float
-    tau_crit_estimado: float | None
+    estimated_tau_crit: float | None
 
 
-def g_tt_componente(g: list[list[float]]) -> float:
+def g_tt_component(g: list[list[float]]) -> float:
     return g[0][0]
 
 
-def ds2_tangente_temporal(g: list[list[float]], v_spatial: tuple[float, float, float] = (0.1, 0.0, 0.0)) -> float:
-    """ds² para 4-velocidad aproximada (1, v_x, v_y, v_z) normalizada en orden de magnitud."""
+def tangent_temporal_ds2(g: list[list[float]], v_spatial: tuple[float, float, float] = (0.1, 0.0, 0.0)) -> float:
+    """ds² for an approximate 4-velocity (1, v_x, v_y, v_z) normalized in order of magnitude."""
     vx, vy, vz = v_spatial
     return (
         g[0][0]
@@ -47,67 +47,67 @@ def ds2_tangente_temporal(g: list[list[float]], v_spatial: tuple[float, float, f
     )
 
 
-def ratio_reloj_vs_minkowski(g: list[list[float]]) -> float:
-    """√|g_tt / (−1)| — <1 dilatación, >1 en ergósfera con g_tt>0."""
+def clock_ratio_vs_minkowski(g: list[list[float]]) -> float:
+    """√|g_tt / (−1)| — <1 dilation, >1 in ergosphere with g_tt>0."""
     gtt = g[0][0]
     return math.sqrt(abs(gtt))
 
 
-def evaluar_estado_causal(
+def evaluate_causal_state(
     site: InjectionSite,
     tau: float,
     tau_crit: float,
     delta_tau: float,
     *,
-    reloj_beacon: float = 1.0,
-    reloj_nave: float | None = None,
-) -> EstadoCausal:
-    from metricas_motor import g_effective_at_tau
+    beacon_clock: float = 1.0,
+    ship_clock: float | None = None,
+) -> CausalState:
+    from engine_metrics import g_effective_at_tau
 
     g = g_effective_at_tau(site, tau, tau_crit, delta_tau)
-    gtt = g_tt_componente(g)
-    ds2 = ds2_tangente_temporal(g)
+    gtt = g_tt_component(g)
+    ds2 = tangent_temporal_ds2(g)
     det = det_4x4(g)
-    ratio = ratio_reloj_vs_minkowski(g)
+    ratio = clock_ratio_vs_minkowski(g)
 
-    if reloj_nave is not None and reloj_beacon > 0:
-        ratio = reloj_nave / reloj_beacon
+    if ship_clock is not None and beacon_clock > 0:
+        ratio = ship_clock / beacon_clock
 
-    senal = SenalCausal.NORMAL
+    signal = CausalSignal.NORMAL
     tau_est: float | None = None
 
     if gtt > 0:
-        senal = SenalCausal.ERGOSFERA
+        signal = CausalSignal.ERGOSPHERE
     if ds2 < 0:
-        senal = SenalCausal.CONO_CERRADO
+        signal = CausalSignal.CLOSED_CONE
     if gtt > 0 and ds2 < 0:
-        senal = SenalCausal.INVERSION_TEMPORAL
+        signal = CausalSignal.TIME_INVERSION
         tau_est = tau
 
-    return EstadoCausal(
-        senal=senal,
+    return CausalState(
+        signal=signal,
         g_tt=gtt,
-        ds2_tangente=ds2,
-        ratio_reloj=ratio,
+        tangent_ds2=ds2,
+        clock_ratio=ratio,
         det_g=det,
-        tau_crit_estimado=tau_est,
+        estimated_tau_crit=tau_est,
     )
 
 
-def detectar_tau_crit(
+def detect_tau_crit(
     site: InjectionSite,
     tau_grid: list[float],
     delta_tau: float,
     tau_crit_guess: float = 0.0,
 ) -> float:
     """
-    Primer τ en la malla donde aparece INVERSION_TEMPORAL; si no hay, el τ con g_tt máximo.
+    First τ in the grid where TIME_INVERSION occurs; if none, the τ with maximum g_tt.
     """
     best_tau = tau_crit_guess
     best_gtt = -1e30
     for tau in tau_grid:
-        st = evaluar_estado_causal(site, tau, tau_crit_guess, delta_tau)
-        if st.senal == SenalCausal.INVERSION_TEMPORAL:
+        st = evaluate_causal_state(site, tau, tau_crit_guess, delta_tau)
+        if st.signal == CausalSignal.TIME_INVERSION:
             return tau
         if st.g_tt > best_gtt:
             best_gtt = st.g_tt

@@ -1,6 +1,6 @@
 """
-Referencia numérica: función bump ψ(z) y rampa Kerr → Alcubierre
-en el tiempo propio τ de la Nave B (prueba de concepto / simulación de lazo).
+Numerical reference: C^∞ bump function ψ(z) and Kerr → Alcubierre metric ramp
+in the proper time τ of Ship B (proof of concept / control loop simulation).
 """
 
 from __future__ import annotations
@@ -12,7 +12,7 @@ T = TypeVar("T", float, list[float])
 
 
 def psi(z: T) -> T:
-    """Bump C^∞: exp(-1/(1-z²)) en |z|<1, 0 en |z|>=1."""
+    """C^∞ bump function: exp(-1/(1-z²)) for |z|<1, 0 for |z|>=1."""
     if isinstance(z, list):
         return [psi(x) for x in z]
     if abs(z) >= 1.0:
@@ -22,7 +22,7 @@ def psi(z: T) -> T:
 
 
 def psi_prime(z: T) -> T:
-    """dψ/dz; cero fuera de (-1,1)."""
+    """dψ/dz; zero outside of (-1, 1)."""
     if isinstance(z, list):
         return [psi_prime(x) for x in z]
     if abs(z) >= 1.0:
@@ -51,7 +51,7 @@ def blend_metric(
     tau_crit: float,
     delta_tau: float,
 ) -> list[list[float]]:
-    """Mezcla lineal componente a componente: g_eff = ψ g_Kerr + (1-ψ) g_Alc."""
+    """Linear component-wise blend: g_eff = ψ g_Kerr + (1-ψ) g_Alc."""
     w = psi_tau(tau, tau_crit, delta_tau)
     n = len(g_kerr)
     return [
@@ -61,9 +61,9 @@ def blend_metric(
 
 
 def det_4x4(m: Sequence[Sequence[float]]) -> float:
-    """Determinante 4×4 por expansión de Laplace (chart fijo)."""
+    """4×4 determinant by Laplace expansion (fixed chart)."""
     if len(m) != 4:
-        raise ValueError("se requiere matriz 4×4")
+        raise ValueError("4×4 matrix required")
 
     def det3(a: list[list[float]]) -> float:
         return (
@@ -86,7 +86,7 @@ def negative_energy_rate(
     delta_tau: float,
     scale: float = 1.0,
 ) -> float:
-    """Proxy: |dψ/dτ| proporcional al gasto de ignición exótica."""
+    """Proxy: |dψ/dτ| proportional to the exotic ignition cost."""
     return scale * abs(dpsi_dtau(tau, tau_crit, delta_tau))
 
 
@@ -94,7 +94,7 @@ def suggest_delta_tau(
     z_dot_max: float,
     tau_dot: float = 1.0,
 ) -> float:
-    """Δτ mínimo para mantener |dz/dτ| = 2|τ̇|/Δτ <= z_dot_max."""
+    """Minimum Δτ to maintain |dz/dτ| = 2|τ̇|/Δτ <= z_dot_max."""
     if z_dot_max <= 0:
-        raise ValueError("z_dot_max debe ser positivo")
+        raise ValueError("z_dot_max must be positive")
     return 2.0 * abs(tau_dot) / z_dot_max

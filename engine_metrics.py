@@ -1,7 +1,7 @@
 """
-Métricas explícitas Kerr (Boyer–Lindquist) y Alcubierre en chart común (t, x, y, z)
-del marco co-móvil de la Nave B, más barrido de det(g_eff) durante la rampa ψ.
-Unidades geométricas: G = c = 1.
+Explicit Kerr (Boyer–Lindquist) and Alcubierre metrics in a shared chart (t, x, y, z)
+for Ship B's co-moving frame, plus a sweep of det(g_eff) during the ψ-ramp.
+Geometrized units: G = c = 1.
 """
 
 from __future__ import annotations
@@ -12,12 +12,12 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable, Iterator, Sequence
 
-from transicion_metrica import blend_metric, det_4x4, psi_tau
+from metric_transition import blend_metric, det_4x4, psi_tau
 
 Matrix4 = list[list[float]]
 
 
-# --- álgebra lineal 4×4 -------------------------------------------------------
+# --- 4×4 linear algebra ------------------------------------------------------
 
 def mat_transpose(m: Matrix4) -> Matrix4:
     return [[m[j][i] for j in range(4)] for i in range(4)]
@@ -31,13 +31,13 @@ def mat_mul(a: Matrix4, b: Matrix4) -> Matrix4:
 
 
 def mat_inv(m: Matrix4, eps: float = 1e-12) -> Matrix4:
-    """Inversa por eliminación de Gauss–Jordan."""
+    """Matrix inversion by Gauss–Jordan elimination."""
     n = 4
     aug = [row[:] + [1.0 if i == j else 0.0 for j in range(n)] for i, row in enumerate(m)]
     for col in range(n):
         pivot = max(range(n), key=lambda r: abs(aug[r][col]))
         if abs(aug[pivot][col]) < eps:
-            raise ValueError("matriz singular")
+            raise ValueError("singular matrix")
         if pivot != col:
             aug[col], aug[pivot] = aug[pivot], aug[col]
         div = aug[col][col]
@@ -52,15 +52,15 @@ def mat_inv(m: Matrix4, eps: float = 1e-12) -> Matrix4:
 
 def transform_metric_covariant(g: Matrix4, jacobian: Matrix4) -> Matrix4:
     """
-    g'_αβ = (J⁻¹)^μ_α g_μν (J⁻¹)^ν_β  con y^α = J^α_μ x^μ (linealizado en el punto).
-  """
+    g'_αβ = (J⁻¹)^μ_α g_μν (J⁻¹)^ν_β with y^α = J^α_μ x^μ (linearized at the point).
+    """
     j_inv = mat_inv(jacobian)
     j_inv_t = mat_transpose(j_inv)
     return mat_mul(mat_mul(j_inv_t, g), j_inv)
 
 
 def apply_block_rotation(g: Matrix4, rot3: list[list[float]]) -> Matrix4:
-    """R₄ = diag(1, R); g' = R₄ᵀ g R₄ (rotación espacial ortogonal)."""
+    """R₄ = diag(1, R); g' = R₄ᵀ g R₄ (orthogonal spatial rotation)."""
     r4 = [
         [1.0, 0.0, 0.0, 0.0],
         [0.0, rot3[0][0], rot3[0][1], rot3[0][2]],
@@ -71,7 +71,7 @@ def apply_block_rotation(g: Matrix4, rot3: list[list[float]]) -> Matrix4:
     return mat_mul(mat_mul(rt, g), r4)
 
 
-# --- Kerr (Boyer–Lindquist) ---------------------------------------------------
+# --- Kerr (Boyer–Lindquist) --------------------------------------------------
 
 def kerr_boyer_lindquist(
     r: float,
@@ -81,7 +81,7 @@ def kerr_boyer_lindquist(
     spin: float,
 ) -> Matrix4:
     """
-    Orden de coordenadas: (t, r, θ, φ).
+    Coordinate order: (t, r, θ, φ).
     rs = 2M; Δ = r² − rs r + a²; ρ² = r² + a² cos²θ.
     """
     rs = 2.0 * mass
@@ -106,7 +106,7 @@ def kerr_boyer_lindquist(
 
 def jacobian_bl_to_cartesian(r: float, theta: float, phi: float) -> Matrix4:
     """
-    (t, r, θ, φ) → (t, x, y, z) con x = r sinθ cosφ, y = r sinθ sinφ, z = r cosθ.
+    (t, r, θ, φ) → (t, x, y, z) with x = r sinθ cosφ, y = r sinθ sinφ, z = r cosθ.
     """
     st, ct = math.sin(theta), math.cos(theta)
     sp, cp = math.sin(phi), math.cos(phi)
@@ -136,10 +136,10 @@ def kerr_outer_horizon(mass: float, spin: float) -> float:
     return mass + math.sqrt(mass * mass - a * a)
 
 
-# --- Alcubierre (chart co-móvil) ----------------------------------------------
+# --- Alcubierre (co-moving chart) --------------------------------------------
 
 def alcubierre_shape(xi: float, sigma: float, radius: float) -> float:
-    """f(ξ) de Alcubierre (1994), normalizado con f(0) ≈ 1 en el centro."""
+    """f(ξ) from Alcubierre (1994), normalized with f(0) ≈ 1 at the center."""
     num = math.tanh(sigma * (xi + radius)) - math.tanh(sigma * (xi - radius))
     den = 2.0 * math.tanh(sigma * radius)
     return num / den
@@ -153,7 +153,7 @@ def alcubierre_cartesian(
     xi_center: float = 0.0,
 ) -> Matrix4:
     """
-    ds² = −dt² + (dx − v_s f dt)² + dy² + dz²; orden (t, x, y, z).
+    ds² = −dt² + (dx − v_s f dt)² + dy² + dz²; order (t, x, y, z).
     """
     f = alcubierre_shape(xi_center, sigma, radius)
     g_tt = -1.0 + vs * vs * f * f
@@ -184,11 +184,11 @@ def rotation_z(angle: float) -> list[list[float]]:
     ]
 
 
-# --- sitio de inyección (ergósfera) -------------------------------------------
+# --- injection site (ergosphere) ---------------------------------------------
 
 @dataclass(frozen=True)
 class InjectionSite:
-    """Punto de acoplamiento Kerr → Alcubierre en la ergósfera ecuatorial."""
+    """Kerr → Alcubierre handover coupling point in the equatorial ergosphere."""
 
     mass: float = 1.0
     spin: float = 0.998
@@ -199,7 +199,7 @@ class InjectionSite:
     vs: float = 0.5
     sigma: float = 1.0
     bubble_radius: float = 1.0
-    # Alinear eje x de la burbuja con ∂/∂φ (arrastre) en el ecuador
+    # Align bubble x-axis with ∂/∂φ (frame-dragging) at the equator
     align_bubble_with_frame_drag: bool = True
 
     @property
@@ -209,7 +209,7 @@ class InjectionSite:
 
 def metrics_in_ship_chart(site: InjectionSite) -> tuple[Matrix4, Matrix4]:
     """
-    Devuelve (g_Kerr, g_Alc) en coordenadas (t, x, y, z) del marco co-móvil.
+    Returns (g_Kerr, g_Alc) in coordinates (t, x, y, z) of the co-moving frame.
     """
     g_bl = kerr_boyer_lindquist(site.r, site.theta, mass=site.mass, spin=site.spin)
     j = jacobian_bl_to_cartesian(site.r, site.theta, site.phi)
@@ -219,7 +219,7 @@ def metrics_in_ship_chart(site: InjectionSite) -> tuple[Matrix4, Matrix4]:
         site.vs, site.sigma, site.bubble_radius, xi_center=0.0
     )
     if site.align_bubble_with_frame_drag:
-        # En φ=0, θ=π/2: ∂/∂φ ∥ ê_y; eje x de Alcubierre → y cartesiano (rotación −π/2 en z).
+        # At φ=0, θ=π/2: ∂/∂φ ∥ ê_y; Alcubierre x-axis → Cartesian y (rotation of −π/2 in z).
         g_alc = apply_block_rotation(g_alc, rotation_z(-math.pi / 2))
 
     return g_kerr, g_alc
@@ -235,7 +235,7 @@ def g_effective_at_tau(
     return blend_metric(g_k, g_a, tau, tau_crit, delta_tau)
 
 
-# --- barrido det(g_eff) -------------------------------------------------------
+# --- det(g_eff) sweep --------------------------------------------------------
 
 @dataclass
 class SweepSample:
@@ -361,7 +361,7 @@ def run_default_sweep(output: Path | None = None) -> dict[str, object]:
 def print_report(report: dict[str, object]) -> None:
     site = report["site"]
     assert isinstance(site, dict)
-    print("=== Metricas en chart (t, x, y, z) - Nave B ===")
+    print("=== Metrics in chart (t, x, y, z) - Ship B ===")
     print(f"  r = {site['r']:.6f}  (factor {InjectionSite().r_factor} x r_plus)")
     print(f"  theta = {site['theta']:.4f} rad,  phi = {site['phi']:.4f} rad")
     print(f"  M = {site['mass']},  a = {site['spin']}")
@@ -372,14 +372,14 @@ def print_report(report: dict[str, object]) -> None:
     print(f"  det(g_Alc)_cart   = {report['det_g_alc_cart']:.6e}")
     sm = report["summary"]
     assert isinstance(sm, dict)
-    print("=== Barrido psi(tau), delta_tau en {0.5, 1, 2, 4} ===")
-    print(f"  muestras: {sm['n_samples']}")
+    print("=== Sweep psi(tau), delta_tau in {0.5, 1, 2, 4} ===")
+    print(f"  samples: {sm['n_samples']}")
     print(f"  min det(g_eff)     = {sm['min_det']:.6e}")
     print(f"  max det(g_eff)     = {sm['max_det']:.6e}")
     print(f"  min |det(g_eff)|   = {sm['min_abs_det']:.6e}")
-    print(f"  todos distintos de 0: {sm['all_nonzero']}")
-    print(f"  cambio de signo:      {sm['sign_changes']}")
-    print(f"  CSV: {report['csv_path']} ({report['csv_rows']} filas)")
+    print(f"  all nonzero: {sm['all_nonzero']}")
+    print(f"  sign changes:      {sm['sign_changes']}")
+    print(f"  CSV: {report['csv_path']} ({report['csv_rows']} rows)")
 
 
 if __name__ == "__main__":

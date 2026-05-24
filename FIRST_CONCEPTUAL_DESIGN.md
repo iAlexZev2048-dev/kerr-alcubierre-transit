@@ -1,129 +1,129 @@
-# Documento Técnico de Diseño Conceptual
+# Technical Conceptual Design Document
 
-**Título de la Invención:** Sistema de Tránsito Causal mediante Acoplamiento de Ergósfera y Protocolo de Extracción Alcubierre  
-**Clasificación Geométrica:** Topología de Colectores de Kerr / Métrica Espaciotemporal No Lineal  
-**Estado:** Prueba de Concepto Teórica  
-**Autor:** Alex Brandon Zevallos Flores  
-**Fecha:** Mayo 2026  
-
----
-
-## 1. Resumen de la Arquitectura
-
-La presente topología describe un motor de alteración temporal macrodinámica. Resuelve el problema del colapso térmico y las fuerzas de marea destructivas de los Cilindros de Tipler aislando la carga biológica mediante un chasis de dos etapas. 
-
-Utiliza la energía rotacional de la ergósfera de un agujero negro supermasivo como "estator" primario para inclinar los conos de luz (Arrastre de Marco), acoplado a una matriz de aceleradores ópticos en serie para forzar una Curva Cerrada de Tipo Tiempo (CTC). La extracción térmica del pozo gravitatorio se realiza mediante la ignición retardada de un motor de densidad de energía negativa (Burbuja de Alcubierre).
+**Invention Title:** Causal Transit System via Ergosphere Coupling and Alcubierre Extraction Protocol  
+**Geometric Classification:** Kerr Manifold Topology / Non-Linear Spacetime Metric  
+**Status:** Theoretical Proof-of-Concept Simulation  
+**Author:** Alex Brandon Zevallos Flores  
+**Date:** May 2026  
 
 ---
 
-## 2. Marco Teórico y Fórmulas de Inyección
+## 1. Architecture Summary
 
-### 2.1. El Estator Natural (Métrica de Kerr)
+The present topology describes a macrodynamical temporal alteration engine. It resolves the problem of thermal collapse and destructive tidal forces of Tipler Cylinders by isolating the biological payload using a two-stage chassis.
 
-El sistema se ancla en el límite estático de un agujero negro en rotación, donde el espacio-tiempo es forzado a co-rotar a velocidades superlumínicas relativas al infinito asintótico. La geometría exacta de esta región de inyección se define mediante la Métrica de Kerr:
+It utilizes the rotational energy of a supermassive black hole's ergosphere as a primary "stator" to tilt light cones (Frame-Dragging), coupled with a series of optical ring accelerators to force a Closed Timelike Curve (CTC). Thermal extraction from the gravitational well is performed via the delayed ignition of a negative energy density engine (Alcubierre Bubble).
+
+---
+
+## 2. Theoretical Framework and Injection Formulas
+
+### 2.1. The Natural Stator (Kerr Metric)
+
+The system is anchored at the static limit of a rotating black hole, where spacetime is forced to co-rotate at superluminal speeds relative to asymptotic infinity. The exact geometry of this injection region is defined by the Kerr Metric:
 
 $$ds^2 = -\left(1 - \frac{r_s r}{\rho^2}\right)c^2 dt^2 + \frac{\rho^2}{\Delta} dr^2 + \rho^2 d\theta^2 + \left(r^2 + a^2 + \frac{r_s r a^2}{\rho^2}\sin^2\theta\right)\sin^2\theta d\phi^2 - \frac{2r_s r a \sin^2\theta}{\rho^2} c dt d\phi$$
 
-Donde:
+Where:
 *   $r_s = 2M$
 *   $\rho^2 = r^2 + a^2 \cos^2\theta$
 *   $\Delta = r^2 - r_s r + a^2$
 
-El término cruzado $dt d\phi$ representa el diferencial de Arrastre de Marco, el combustible gravitatorio primario del sistema.
+The cross-term $dt d\phi$ represents the frame-dragging differential, the primary gravitational fuel of the system.
 
-### 2.2. Sobrealimentación del Vórtice (Acoplamiento de Anillos)
+### 2.2. Vortex Overcharging (Ring Coupling)
 
-Dentro de la ergósfera, el colector activa una serie de anillos láser continuos. Al circular fotones en un bucle cerrado, se induce un gradiente gravitacional secundario que cierra el ángulo del cono de luz de la nave $ds^2 < 0$, invirtiendo la coordenada temporal ($t$) respecto al espacio exterior.
-
----
-
-## 3. Diagrama de Flujo Mecánico
-
-*   **Fase 0: Calibración del Marco Inercial.** La Nave A (Faro de Referencia) se posiciona en el espacio de Minkowski plano ($r \to \infty$), donde el tensor de energía-impulso es nulo.
-*   **Fase 1: Descenso Pasivo.** La Nave B (Carga Útil) ingresa a la ergósfera del estator masivo con propulsión apagada para evitar gasto termodinámico.
-*   **Fase 2: Inyección de Tránsito Causal.** La Nave B ingresa al tubo de anillos acoplado en la ergósfera. Mediante el Proceso de Penrose, la nave extrae momento angular del agujero negro soltando masa de lastre en contra de la rotación, generando el delta-v ($\Delta v$) necesario para completar el circuito de Curva Cerrada de Tipo Tiempo sin encender motores principales.
-*   **Fase 3: Ruptura Topológica (Extracción).** Una vez alcanzada la coordenada temporal negativa (el pasado), la Nave B inicializa la métrica de Alcubierre para aislar su chasis de la geometría de Kerr.
+Within the ergosphere, the collector activates a series of continuous laser rings. By circulating photons in a closed loop, a secondary gravitational gradient is induced that closes the ship's light cone angle $ds^2 < 0$, inverting the temporal coordinate ($t$) relative to the exterior space.
 
 ---
 
-## 4. Protocolo de Aislamiento (Métrica de Alcubierre)
+## 3. Mechanical Flow Diagram
 
-Para evitar que la carga útil sea absorbida por el Horizonte de Eventos, el sistema modifica el tensor $T_{\mu\nu}$ inyectando materia de densidad energética negativa local. La topología local se sobreescribe con el colector de Alcubierre:
+*   **Phase 0: Inertial Frame Calibration.** Ship A (Reference Beacon) positions itself in flat Minkowski space ($r \to \infty$), where the stress-energy tensor is zero.
+*   **Phase 1: Passive Descent.** Ship B (Payload) enters the ergosphere of the massive stator with propulsion turned off to avoid thermodynamic expenditure.
+*   **Phase 2: Causal Transit Injection.** Ship B enters the ring tube coupled in the ergosphere. Through the Penrose Process, the ship extracts angular momentum from the black hole by ejecting ballast mass against the rotation, generating the delta-v ($\Delta v$) required to complete the Closed Timelike Curve circuit without firing main engines.
+*   **Phase 3: Topological Rupture (Extraction).** Once the negative temporal coordinate (the past) is reached, Ship B initializes the Alcubierre metric to isolate its chassis from the Kerr geometry.
+
+---
+
+## 4. Isolation Protocol (Alcubierre Metric)
+
+To prevent the payload from being absorbed by the Event Horizon, the system modifies the tensor $T_{\mu\nu}$ by injecting local negative energy density matter. The local topology is overwritten with the Alcubierre collector:
 
 $$ds^2 = -c^2 dt^2 + (dx - v_s f(r_s) dt)^2 + dy^2 + dz^2$$
 
-*   **Contracción Frontal:** El espacio frente a la nave colapsa ($\theta < 0$).
-*   **Expansión Trasera:** El espacio entre el chasis y el Horizonte de Eventos se expande métricamente ($\theta > 0$).
-*   **Aislamiento Geométrico:** La Nave B entra en reposo cinemático absoluto y se desliza fuera del campo gravitatorio masivo de retorno hacia la coordenada balizada por la Nave A, burlando la gravedad térmica del sistema.
+*   **Frontal Contraction:** Space in front of the ship collapses ($\theta < 0$).
+*   **Rear Expansion:** Space between the chassis and the Event Horizon expands metrically ($\theta > 0$).
+*   **Geometric Isolation:** Ship B enters absolute kinematic rest and slides out of the returning massive gravitational field toward the coordinate beaconed by Ship A, bypassing the thermal gravity of the system.
 
 ---
 
-## 5. Transición Analítica Entre Métricas (Función $\psi$)
+## 5. Analytical Metric Transition (Function $\psi$)
 
-La conmutación abrupta Kerr → Alcubierre introduciría discontinuidades en las derivadas de $g_{\mu\nu}$ y, por las ecuaciones de Einstein, en $T_{\mu\nu}$. Se define un buffer de clase $C^\infty$ que gradúa la métrica efectiva en el tiempo propio $\tau$ de la Nave B.
+The abrupt switching Kerr → Alcubierre would introduce discontinuities in the derivatives of $g_{\mu\nu}$ and, via Einstein's equations, in $T_{\mu\nu}$. A $C^\infty$-class buffer is defined to graduate the effective metric in the proper time $\tau$ of Ship B.
 
-### 5.1. Función bump estándar
-Dominio $z \in \mathbb{R}$:
+### 5.1. Standard Bump Function
+Domain $z \in \mathbb{R}$:
 
 $$\psi(z) = \begin{cases} e^{-\frac{1}{1-z^2}} & \text{si } |z| < 1 \\ 0 & \text{si } |z| \ge 1 \end{cases}$$
 
-Propiedades: $\psi \in C^\infty(\mathbb{R})$; $\psi$ y todas sus derivadas se anulan en $|z|=1$ (transición de clase $C^\infty$ sin salto). En el núcleo $|z|<1$, $\psi > 0$.
+Properties: $\psi \in C^\infty(\mathbb{R})$; $\psi$ and all its derivatives vanish at $|z|=1$ (transition of class $C^\infty$ without jumps). In the core $|z|<1$, $\psi > 0$.
 
-Variable de fase: $z(\tau) = \dfrac{2(\tau - \tau_{crit})}{\Delta\tau}$, con $\tau_{crit}$ el instante de inyección causal (coordenada temporal negativa alcanzada) y $\Delta\tau$ la ventana de mezcla.
+Phase variable: $z(\tau) = \dfrac{2(\tau - \tau_{crit})}{\Delta\tau}$, with $\tau_{crit}$ being the instant of causal injection (negative temporal coordinate reached) and $\Delta\tau$ the blending window.
 
-### 5.2. Métrica efectiva
+### 5.2. Effective Metric
 
 $$g_{\mu\nu}^{\text{eff}}(\tau) = \psi\bigl(z(\tau)\bigr)\, g_{\mu\nu}^{\text{Kerr}} + \Bigl[1 - \psi\bigl(z(\tau)\bigr)\Bigr]\, g_{\mu\nu}^{\text{Alcubierre}}$$
 
-Límites:
+Limits:
 *   $\tau \ll \tau_{crit} - \Delta\tau/2 \Rightarrow g^{\text{eff}} \approx g^{\text{Kerr}}$
 *   $\tau \gg \tau_{crit} + \Delta\tau/2 \Rightarrow g^{\text{eff}} \approx g^{\text{Alcubierre}}$
 
-*Condición de atlas:* durante la rampa se exige $\det(g_{\mu\nu}^{\text{eff}}) \neq 0$ en el chart del colector; la mezcla lineal de tensores métricos no preserva el determinante punto a punto, por lo que el lazo de control debe vigilar $\det(g^{\text{eff}})$ y el factor de forma en $Z$ en tiempo real.
+*Atlas condition:* during the ramp it is required that $\det(g_{\mu\nu}^{\text{eff}}) \neq 0$ in the collector chart; the linear blending of metric tensors does not preserve the determinant point-by-point, which is why the control loop must monitor $\det(g^{\text{eff}})$ and the Z shape factor in real time.
 
-### 5.3. Acoplamiento termodinámico (densidad de energía negativa)
-La ignición del motor Alcubierre no es escalón; el aporte de materia exótica escala con la velocidad de mezcla:
+### 5.3. Thermodynamic Coupling (Negative Energy Density)
+The ignition of the Alcubierre engine is not step-wise; the input of exotic matter scales with the blending speed:
 
 $$\dot{\mathcal{E}}_{\text{neg}} \propto \left|\frac{d\psi}{d\tau}\right| = \left|\psi'(z)\right|\,\frac{2}{\Delta\tau}$$
 
-El máximo de $|\dot{\mathcal{E}}_{\text{neg}}|$ ocurre cerca de $\tau = \tau_{crit}$ (centro de la bump), no en los extremos donde $\psi' \to 0$.
+The maximum of $|\dot{\mathcal{E}}_{\text{neg}}|$ occurs near $\tau = \tau_{crit}$ (center of the bump), not at the boundaries where $\psi' \to 0$.
 
-### 5.4. Arquitectura de control (hardware)
-*   **Sincronización de fase:** Monitoreo en tiempo real del arrastre de marco ($dt\,d\phi$ de Kerr). Si el factor de forma en $Z$ fluctúa, el controlador recalibra $\Delta\tau$ o desplaza $\tau_{crit}$ vía $z(\tau)$ para mantener $|\psi'|$ acotada y evitar espaguetización.
-*   **Gradiente de densidad energética:** El lazo de ignición sigue $\psi(z)$; prohibida la conmutación binaria del campo exótico.
-*   **Estabilidad topológica:** Mientras $\det(g^{\text{eff}}) \neq 0$, el atlas del motor permanece válido como colector y la extracción geométrica (Fase 3) puede completarse sin ruptura del chart.
+### 5.4. Control Architecture (Hardware)
+*   **Phase synchronization:** Real-time monitoring of frame-dragging ($dt\,d\phi$ of Kerr). If the shape factor in $Z$ fluctuates, the controller recalibrates $\Delta\tau$ or shifts $\tau_{crit}$ via $z(\tau)$ to keep $|\psi'|$ bounded and prevent spaghettification.
+*   **Energy density gradient:** The ignition loop follows $\psi(z)$; binary switching of the exotic field is forbidden.
+*   **Topological stability:** As long as $\det(g^{\text{eff}}) \neq 0$, the engine atlas remains valid as a manifold, and geometric extraction (Phase 3) can be completed without chart rupture.
 
-### 5.5. Coordinación de charts (implementación de referencia)
-Ambas métricas se evalúan en el marco co-móvil $(t, x, y, z)$ de la Nave B en el punto de inyección $(r, \theta, \phi)$ de la ergósfera:
-*   **Kerr:** Boyer–Lindquist $(t, r, \theta, \phi)$ → cartesianas locales $x = r\sin\theta\cos\phi$, $y = r\sin\theta\sin\phi$, $z = r\cos\theta$ mediante el jacobiano $J^\alpha{}_\mu$ en el punto; $g_{\alpha\beta}^{\text{cart}} = (J^{-1})^\mu{}_\alpha g_{\mu\nu}^{\text{BL}} (J^{-1})^\nu{}_\beta$.
-*   **Alcubierre:** Chart co-móvil con $f(\xi)$ de Alcubierre (1994); el eje $x$ de la burbuja se rota al vector $\partial/\partial\phi$ (dirección del arrastre de marco en el ecuador) para alinear contracción/expansión con el flujo ergosférico.
+### 5.5. Chart Coordination (Reference Implementation)
+Both metrics are evaluated in the co-moving frame $(t, x, y, z)$ of Ship B at the injection point $(r, \theta, \phi)$ of the ergosphere:
+*   **Kerr:** Boyer–Lindquist $(t, r, \theta, \phi)$ → local Cartesian $x = r\sin\theta\cos\phi$, $y = r\sin\theta\sin\phi$, $z = r\cos\theta$ via the Jacobian $J^\alpha{}_\mu$ at the point; $g_{\alpha\beta}^{\text{cart}} = (J^{-1})^\mu{}_\alpha g_{\mu\nu}^{\text{BL}} (J^{-1})^\nu{}_\beta$.
+*   **Alcubierre:** Co-moving chart with Alcubierre (1994) $f(\xi)$; the $x$-axis of the bubble is rotated to the vector $\partial/\partial\phi$ (direction of equatorial frame-dragging) to align contraction/expansion with the ergospheric flow.
 
-*Parámetros por defecto (unidades $G=c=1$):* $r = 1{,}05\,r_+$, $\theta = \pi/2$, $a = 0{,}998\,M$, $v_s = 0{,}5$, $\sigma = 1$, $R_{\text{burbuja}} = 1$. Barrido numérico: `python metricas_motor.py` → `sweep_det_results.csv` ($\det g^{\text{eff}}$ vs $\tau$, $\Delta\tau$).
+*Default parameters (units $G=c=1$):* $r = 1.05\,r_+$, $\theta = \pi/2$, $a = 0.998\,M$, $v_s = 0.5$, $\sigma = 1$, $R_{\text{bubble}} = 1$. Numerical sweep: `python engine_metrics.py` → `sweep_det_results.csv` ($\det g^{\text{eff}}$ vs $\tau$, $\Delta\tau$).
 
-### 5.6. Lazo de control PID adaptativo (Fase 3 — materialización en firmware)
-El pseudocódigo `control_transicion_metrica(z, τ)` en `control_motor.hpp` / `control_motor.py` ejecuta:
-1. $\psi(z)$ con $z = 2(\tau-\tau_{crit})/\Delta\tau$.
-2. $T_{\text{target}} = \psi T_{\text{Kerr}} + (1-\psi) T_{\text{Alc}}$; escala $T_{zz}$ con el factor de forma en $Z$.
-3. Retroalimentación Hawking: si `radiation_leak` > `LIMITE_CRITICO`, estrechar $Z$ (`Z_COMPENSATION`) e inyectar $T_{\text{target}} - \text{compensación}$.
-4. PID adaptativo sobre $\|\Delta\rho\|$ y $\|\Delta T_{zz}\|$; ganancias moduladas por $|d\psi/d\tau|$ y fuga de vacío.
-5. Handover: $f_{\text{anillos}} \propto \psi$ (cierre gradual del cono de luz); $\dot m_{\text{lastre}} \propto |d\psi/d\tau|$ (Penrose, Fase 2).
-6. Ruptura de emergencia: si $\det(g^{\text{eff}}) \to 0$, $|T_{zz}| \to \infty$ o $\mathrm{rank}(F_*) < 3.5$, forzar $T_{\text{Alc}}$ puro (escudo cinemático).
+### 5.6. Adaptive PID Control Loop (Phase 3 — Firmware Materialization)
+The pseudocódigo `control_metric_transition(z, τ)` in `engine_control.hpp` / `engine_control.py` executes:
+1. $\psi(z)$ with $z = 2(\tau-\tau_{crit})/\Delta\tau$.
+2. $T_{\text{target}} = \psi T_{\text{Kerr}} + (1-\psi) T_{\text{Alc}}$; scale $T_{zz}$ with the shape factor in $Z$.
+3. Hawking feedback: if `radiation_leak` > `CRITICAL_LIMIT`, shrink $Z$ (`Z_COMPENSATION`) and inject $T_{\text{target}} - \text{compensation}$.
+4. Adaptive PID over $\|\Delta\rho\|$ and $\|\Delta T_{zz}\|$; gains modulated by $|d\psi/d\tau|$ and vacuum leak.
+5. Handover: $f_{\text{rings}} \propto \psi$ (gradual closing of light cone); $\dot m_{\text{ballast}} \propto |d\psi/d\tau|$ (Penrose, Phase 2).
+6. Emergency rupture: if $\det(g^{\text{eff}}) \to 0$, $|T_{zz}| \to \infty$ or $\mathrm{rank}(F_*) < 3.5$, force pure $T_{\text{Alc}}$ (kinematic shield).
 
-*Estabilidad topológica:* proxy $\mathrm{rank}(F_*) \approx 4|\det g|^{1/4}/\mathrm{tr}|g|$; la espaguetización corresponde a pérdida de rango del diferencial del mapa de handover.
+*Topological stability:* proxy $\mathrm{rank}(F_*) \approx 4|\det g|^{1/4}/\mathrm{tr}|g|$; spaghettification corresponds to rank loss in the differential of the handover map.
 
-Simulación: `python control_motor.py`. C++: `g++ -std=c++17 -O2 -o control_demo control_motor.cpp`.
+Simulation: `python engine_control.py`. C++: `g++ -std=c++17 -O2 -o control_demo engine_control.cpp`.
 
-### 5.7. Máquina de fases, $\tau_{crit}$ y presupuesto energético
-*   **Fases (`fases_motor.py`):** CALIBRACION (Nave A) → DESCENSO → INYECCION_CTC (Penrose, $\dot m \propto |d\psi/d\tau|$) → RUPTURA_TOPOLOGICA (PID + $\psi$) → EXTRACCION → ABORT.
-*   **$\tau_{crit}$ (`tau_crit.py`):** Se estima cuando $g_{tt}>0$ (ergósfera) y $ds^2<0$ en dirección tangente (cono cerrado / inversión temporal local).
-*   **$T_{\mu\nu}$ (`einstein_proxy.py`):** Proxy linealizado $T \sim (g-\eta)/(8\pi)$ mezclado con $\psi$; condiciones WEC/NEC/SEC monitorizables.
-*   **Presupuesto (`presupuesto_energia.py`):** $\eta_{\text{Penrose}}$, $E_{\text{Alc}} \sim v_s^2 R^2/(8\pi\sigma^2)$, pico de rampa vs extracción.
-*   **Calibración (`calibracion.py` → `motor_config.json`):** Umbrales de det, ranking y Hawking desde el barrido CSV.
-*   **Pipeline:** `python simulacion_completa.py` → `simulacion_completa.csv`. Tests: `python -m unittest tests/test_motor.py -v`.
+### 5.7. Phase Machine, $\tau_{crit}$ and Energy Budget
+*   **Phases (`engine_phases.py`):** CALIBRATION (Ship A) → DESCENT → CTC_INJECTION (Penrose, $\dot m \propto |d\psi/d\tau|$) → TOPOLOGICAL_RUPTURE (PID + $\psi$) → EXTRACTION → ABORT.
+*   **$\tau_{crit}$ (`tau_crit.py`):** Estimated when $g_{tt}>0$ (ergosphere) and $ds^2<0$ in the tangent direction (closed cone / local time inversion).
+*   **$T_{\mu\nu}$ (`einstein_proxy.py`):** Linearized proxy $T \sim (g-\eta)/(8\pi)$ blended with $\psi$; WEC/NEC/SEC conditions monitorable.
+*   **Budget (`energy_budget.py`):** $\eta_{\text{Penrose}}$, $E_{\text{Alc}} \sim v_s^2 R^2/(8\pi\sigma^2)$, peak ramp vs extraction.
+*   **Calibration (`calibration.py` → `motor_config.json`):** det, ranking, and Hawking thresholds calibrated from CSV sweep.
+*   **Pipeline:** `python complete_simulation.py` → `complete_simulation.csv`. Tests: `python -m unittest tests/test_engine.py -v`.
 
 ---
 
-## 6. Excepciones y Manejo de Errores Estructurales
+## 6. Exceptions and Structural Error Handling
 
-*   **Excepción Hawking_Radiation_Overflow:** Si el campo de energía negativa se inestabiliza durante el cierre de la curva de tipo tiempo, la retroalimentación de las fluctuaciones del vacío destruirá la topología local.
-*   **Resolución Requerida:** La geometría de inyección debe mantener el factor de forma constante; cualquier alteración en el eje ortogonal $Z$ durante el Arrastre de Marco resultará en espaguetización instantánea.
+*   **Exception Hawking_Radiation_Overflow:** If the negative energy field becomes unstable during the closing of the timelike curve, vacuum fluctuation feedback will destroy the local topology.
+*   **Required Resolution:** The injection geometry must keep the shape factor constant; any alteration in the orthogonal $Z$ axis during Frame-Dragging will result in instantaneous spaghettification.
