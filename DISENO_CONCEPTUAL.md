@@ -1,4 +1,4 @@
-# Documento Técnico de Patente Conceptual
+# Documento Técnico de Diseño Conceptual
 
 **Título de la Invención:** Sistema de Tránsito Causal mediante Acoplamiento de Ergósfera y Protocolo de Extracción Alcubierre  
 **Clasificación Geométrica:** Topología de Colectores de Kerr / Métrica Espaciotemporal No Lineal  
