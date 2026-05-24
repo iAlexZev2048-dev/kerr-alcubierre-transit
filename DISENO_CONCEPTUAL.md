@@ -104,12 +104,12 @@ Ambas métricas se evalúan en el marco co-móvil $(t, x, y, z)$ de la Nave B en
 El pseudocódigo `control_transicion_metrica(z, τ)` en `control_motor.hpp` / `control_motor.py` ejecuta:
 1. $\psi(z)$ con $z = 2(\tau-\tau_{crit})/\Delta\tau$.
 2. $T_{\text{target}} = \psi T_{\text{Kerr}} + (1-\psi) T_{\text{Alc}}$; escala $T_{zz}$ con el factor de forma en $Z$.
-3. Retroalimentación Hawking: si $\texttt{radiation\_leak} > \texttt{LIMITE\_CRITICO}$, estrechar $Z$ (`Z_COMPENSATION`) e inyectar $T_{\text{target}} - \text{compensación}$.
+3. Retroalimentación Hawking: si `radiation_leak` > `LIMITE_CRITICO`, estrechar $Z$ (`Z_COMPENSATION`) e inyectar $T_{\text{target}} - \text{compensación}$.
 4. PID adaptativo sobre $\|\Delta\rho\|$ y $\|\Delta T_{zz}\|$; ganancias moduladas por $|d\psi/d\tau|$ y fuga de vacío.
 5. Handover: $f_{\text{anillos}} \propto \psi$ (cierre gradual del cono de luz); $\dot m_{\text{lastre}} \propto |d\psi/d\tau|$ (Penrose, Fase 2).
-6. Ruptura de emergencia: si $\det(g^{\text{eff}}) \to 0$, $|T_{zz}| \to \infty$ o $\operatorname{rank}(F_*) < 3.5$, forzar $T_{\text{Alc}}$ puro (escudo cinemático).
+6. Ruptura de emergencia: si $\det(g^{\text{eff}}) \to 0$, $|T_{zz}| \to \infty$ o $\mathrm{rank}(F_*) < 3.5$, forzar $T_{\text{Alc}}$ puro (escudo cinemático).
 
-*Estabilidad topológica:* proxy $\operatorname{rank}(F_*) \approx 4|\det g|^{1/4}/\mathrm{tr}|g|$; la espaguetización corresponde a pérdida de rango del diferencial del mapa de handover.
+*Estabilidad topológica:* proxy $\mathrm{rank}(F_*) \approx 4|\det g|^{1/4}/\mathrm{tr}|g|$; la espaguetización corresponde a pérdida de rango del diferencial del mapa de handover.
 
 Simulación: `python control_motor.py`. C++: `g++ -std=c++17 -O2 -o control_demo control_motor.cpp`.
 
