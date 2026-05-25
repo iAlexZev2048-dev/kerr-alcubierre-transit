@@ -8,7 +8,7 @@ import csv
 from pathlib import Path
 
 from calibration import load_config, run_calibration
-from engine_phases import EngineConfig, Phase, CausalEngine, ShipATelemetry
+from engine_phases import EngineConfig, Phase, TransitionSimulation, ReferenceTelemetry
 from engine_metrics import InjectionSite, default_tau_grid
 from energy_budget import evaluate_budget, budget_table_text
 from tau_crit import evaluate_causal_state
@@ -34,8 +34,8 @@ def simulate(
     site = InjectionSite()
     cfg = EngineConfig(site=site)
     cfg.par.delta_tau = delta_tau
-    motor = CausalEngine(cfg)
-    motor.set_beacon(ShipATelemetry(beacon_clock=1.0, link_active=True))
+    motor = TransitionSimulation(cfg)
+    motor.set_beacon(ReferenceTelemetry(beacon_clock=1.0, link_active=True))
 
     tau_grid = default_tau_grid(0.0, delta_tau * 1.5, n_tau)
     cfg.par.dt_control = tau_grid[1] - tau_grid[0]
@@ -61,6 +61,9 @@ def simulate(
                 "ballast": cmd.ballast_rate_kg_s,
                 "rho": cmd.injection.rho,
                 "emergency": cmd.emergency_rupture,
+                "sec_bus": cmd.secondary_bus_energy,
+                "power_src": cmd.power_source,
+                "handover": cmd.handover_state,
                 "message": cmd.message,
             }
         )
@@ -71,7 +74,18 @@ def simulate(
         w.writerows(log)
 
     print(f"Log saved: {LOG_CSV} ({len(log)} steps)")
-    print("Phase summary:")
+    
+    print("\nTelemetry Sweep during transition phases:")
+    print("tau      phase            state       src  buffer_chg  emergency?")
+    print("-" * 75)
+    for row in log:
+        if row["phase"] in ("CTC_INJECTION", "TOPOLOGICAL_RUPTURE", "EXTRACTION"):
+            print(
+                f"{row['tau']:6.3f}  {row['phase']:15s}  {row['handover']:8s}    "
+                f"{row['power_src']:3s}  {row['sec_bus']:10.3e}  {row['emergency']}"
+            )
+
+    print("\nPhase summary:")
     phases_seen = []
     for row in log:
         if not phases_seen or phases_seen[-1] != row["phase"]:

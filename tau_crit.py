@@ -8,7 +8,7 @@ import math
 from dataclasses import dataclass
 from enum import Enum, auto
 
-from engine_metrics import InjectionSite, metrics_in_ship_chart
+from engine_metrics import InjectionSite, metrics_in_local_chart
 from metric_transition import det_4x4, z_phase
 
 
@@ -60,7 +60,7 @@ def evaluate_causal_state(
     delta_tau: float,
     *,
     beacon_clock: float = 1.0,
-    ship_clock: float | None = None,
+    local_clock: float | None = None,
 ) -> CausalState:
     from engine_metrics import g_effective_at_tau
 
@@ -70,8 +70,8 @@ def evaluate_causal_state(
     det = det_4x4(g)
     ratio = clock_ratio_vs_minkowski(g)
 
-    if ship_clock is not None and beacon_clock > 0:
-        ratio = ship_clock / beacon_clock
+    if local_clock is not None and beacon_clock > 0:
+        ratio = local_clock / beacon_clock
 
     signal = CausalSignal.NORMAL
     tau_est: float | None = None

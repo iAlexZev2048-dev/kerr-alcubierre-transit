@@ -1,9 +1,10 @@
 """
-State machine Phase 0 → 3 for the causal engine (Ship A / Ship B).
+State machine Phase 0 → 3 for the metric transition (Reference Observer / Co-moving Probe).
 """
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass, field
 from enum import Enum, auto
 
@@ -11,12 +12,12 @@ from engine_control import (
     AdaptivePid,
     TransitionParameters,
     ControlOutput,
-    ShipSensors,
+    TelemetrySensors,
     Tensor,
     control_metric_transition,
 )
 from einstein_proxy import T_from_g
-from engine_metrics import InjectionSite, metrics_in_ship_chart
+from engine_metrics import InjectionSite, metrics_in_local_chart
 from energy_budget import evaluate_budget
 from engine_control import ballast_rate_from_dpsi, ring_frequency_from_psi
 from tau_crit import CausalSignal, detect_tau_crit, evaluate_causal_state
@@ -24,8 +25,8 @@ from metric_transition import dpsi_dtau, psi, z_phase
 
 
 class Phase(Enum):
-    CALIBRATION = auto()         # Phase 0 — Ship A, Minkowski
-    DESCENT = auto()             # Phase 1 — passive ergosphere
+    CALIBRATION = auto()         # Phase 0 — Reference Observer, Minkowski
+    DESCENT = auto()             # Phase 1 — passive geodesic descent
     CTC_INJECTION = auto()       # Phase 2 — rings + Penrose
     TOPOLOGICAL_RUPTURE = auto() # Phase 3 — ψ-ramp
     EXTRACTION = auto()          # post-bubble, return to beacon
@@ -33,7 +34,7 @@ class Phase(Enum):
 
 
 @dataclass
-class ShipATelemetry:
+class ReferenceTelemetry:
     beacon_clock: float = 1.0
     link_active: bool = True
     coordinates_ok: bool = True
@@ -48,6 +49,9 @@ class EngineCommand:
     emergency_rupture: bool = False
     z_compensation_mode: bool = False
     message: str = ""
+    secondary_bus_energy: float = 1.0e-2
+    power_source: str = "SEC"
+    handover_state: str = "PRE_TRAN"
 
 
 @dataclass
@@ -58,7 +62,7 @@ class EngineConfig:
     auto_tau_crit: bool = True
 
 
-class CausalEngine:
+class TransitionSimulation:
     def __init__(self, config: EngineConfig | None = None) -> None:
         self.cfg = config or EngineConfig()
         self.phase = Phase.CALIBRATION
@@ -66,9 +70,15 @@ class CausalEngine:
         self.tau_crit_locked: float | None = None
         self.measured_T = Tensor()
         self._steps = 0
-        self._beacon = ShipATelemetry()
+        self._beacon = ReferenceTelemetry()
+        
+        # Dual-buffer energy routing system (auxiliary quantum reservoir)
+        self.secondary_bus_energy = 1.0e-2  # Auxiliary energy buffer initial charge
+        self.secondary_bus_capacity = 1.5e-2  # Max capacity
+        self.power_source = "SEC"
+        self.handover_state = "PRE_TRAN"
 
-    def set_beacon(self, beacon: ShipATelemetry) -> None:
+    def set_beacon(self, beacon: ReferenceTelemetry) -> None:
         self._beacon = beacon
 
     def _tau_crit(self) -> float:
@@ -78,7 +88,7 @@ class CausalEngine:
         self.phase = new_phase
         self._last_msg = msg
 
-    def step(self, tau: float, sensors: ShipSensors | None = None) -> EngineCommand:
+    def step(self, tau: float, sensors: TelemetrySensors | None = None) -> EngineCommand:
         self._steps += 1
         site = self.cfg.site
         par = self.cfg.par
@@ -90,15 +100,57 @@ class CausalEngine:
 
             sensors = sensors_from_metric(site, tau, par)
 
+        # --- Dual-Bus Power Routing & Handover State Machine ---
+        t_rel = tau - self._tau_crit()
+        from energy_budget import alcubierre_bubble_energy
+        e_alc = alcubierre_bubble_energy(site.vs, site.bubble_radius, site.sigma)
+        dpsi = dpsi_dtau(tau, self._tau_crit(), par.delta_tau)
+        energy_needed_raw = e_alc * abs(dpsi)
+        # 95% boundary extraction efficiency
+        shield_thermal_load = energy_needed_raw * (1.0 - 0.95)
+
+        if self.phase in (Phase.CALIBRATION, Phase.DESCENT):
+            self.handover_state = "PRE_TRAN"
+            self.power_source = "SEC"
+        elif t_rel < -0.48:
+            self.handover_state = "PRE_TRAN"
+            self.power_source = "SEC"
+            self.secondary_bus_energy = max(0.0, self.secondary_bus_energy - shield_thermal_load)
+        elif -0.48 <= t_rel < 0.72:
+            self.handover_state = "HAND_POS" if t_rel <= 0.00 else "COHERENT"
+            self.power_source = "PRI"
+            psi_val = psi(z)
+            if psi_val > 0.0:
+                # Same gain coefficients used in speculative simulation
+                amplification = math.exp(1.8 * (t_rel + par.delta_tau))
+                energy_harvested = 2.0e-4 * amplification * psi_val
+            else:
+                energy_harvested = 0.0
+            
+            net_energy_balance = energy_harvested - shield_thermal_load
+            if net_energy_balance > 0.0:
+                self.secondary_bus_energy = min(
+                    self.secondary_bus_capacity,
+                    self.secondary_bus_energy + net_energy_balance
+                )
+        else:
+            self.handover_state = "HAND_NEG"
+            self.power_source = "SEC"
+            self.secondary_bus_energy = max(0.0, self.secondary_bus_energy - shield_thermal_load)
+
+        # Trigger emergency abort if buffer is depleted during transition
+        if self.power_source == "SEC" and self.secondary_bus_energy <= 0.0 and self.phase not in (Phase.CALIBRATION, Phase.DESCENT):
+            self.transition(Phase.ABORT, "auxiliary energy reservoir depletion")
+
         cmd = EngineCommand(phase=self.phase)
 
-        # --- Phase 0: Calibration with Ship A ---
+        # --- Phase 0: Calibration with Reference Observer ---
         if self.phase == Phase.CALIBRATION:
             if not self._beacon.link_active or not self._beacon.coordinates_ok:
-                self.transition(Phase.ABORT, "loss of Ship A beacon")
+                self.transition(Phase.ABORT, "loss of reference observer signal")
             elif self._steps >= 1 and tau > par.tau_crit - 1.5 * par.delta_tau:
-                self.transition(Phase.DESCENT, "beacon OK, starting descent")
-            cmd.message = "synchronizing clock with Ship A"
+                self.transition(Phase.DESCENT, "reference telemetry locked, starting descent")
+            cmd.message = "synchronizing clocks with reference frame"
             cmd.ring_frequency_hz = 0.0
             return self._finalize(cmd)
 
@@ -133,7 +185,7 @@ class CausalEngine:
 
         # --- Phase 3 / Extraction: ψ control + PID ---
         if self.phase in (Phase.TOPOLOGICAL_RUPTURE, Phase.EXTRACTION):
-            g_k, g_a = metrics_in_ship_chart(site)
+            g_k, g_a = metrics_in_local_chart(site)
             if self.cfg.use_T_from_g:
                 t_k, t_a = T_from_g(g_k), T_from_g(g_a)
             else:
@@ -164,6 +216,9 @@ class CausalEngine:
 
     def _finalize(self, cmd: EngineCommand) -> EngineCommand:
         cmd.phase = self.phase
+        cmd.secondary_bus_energy = self.secondary_bus_energy
+        cmd.power_source = self.power_source
+        cmd.handover_state = self.handover_state
         return cmd
 
     def calibrate_tau_crit(self, tau_grid: list[float]) -> float:

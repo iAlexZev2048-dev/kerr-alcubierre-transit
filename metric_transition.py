@@ -1,6 +1,6 @@
 """
 Numerical reference: C^∞ bump function ψ(z) and Kerr → Alcubierre metric ramp
-in the proper time τ of Ship B (proof of concept / control loop simulation).
+in the proper time τ of the co-moving frame (proof of concept / control loop simulation).
 """
 
 from __future__ import annotations

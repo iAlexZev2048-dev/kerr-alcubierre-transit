@@ -15,7 +15,7 @@ int main() {
     par.tau_crit = 0.0;
     par.dt_control = 0.01;
 
-    ShipSensors sensors{};
+    TelemetrySensors sensors{};
     Tensor T_measured = T_kerr_nominal();
 
     printf("=== Phase 3 Simulation: control_metric_transition ===\n");

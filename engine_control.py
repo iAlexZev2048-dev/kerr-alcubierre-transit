@@ -77,7 +77,7 @@ def T_alcubierre_nominal() -> Tensor:
 
 
 @dataclass
-class ShipSensors:
+class TelemetrySensors:
     vacuum_fluctuation: float = 0.0
     scalar_curvature: float = 0.0
     det_g_eff: float = 1.0
@@ -157,7 +157,7 @@ def adjust_orthogonal_axis(z_shape: float, factor: float = DEFAULT_Z_COMPENSATIO
     return z_shape * factor
 
 
-def is_map_stable(s: ShipSensors) -> bool:
+def is_map_stable(s: TelemetrySensors) -> bool:
     return (
         abs(s.det_g_eff) > MIN_DET_G
         and s.jacobian_ranking >= MIN_RANKING
@@ -165,7 +165,7 @@ def is_map_stable(s: ShipSensors) -> bool:
     )
 
 
-def is_z_axis_diverging(s: ShipSensors) -> bool:
+def is_z_axis_diverging(s: TelemetrySensors) -> bool:
     return abs(s.measured_T_zz) >= Z_DIVERGENCE_LIMIT or abs(s.det_g_eff) < MIN_DET_G
 
 
@@ -188,9 +188,9 @@ def sensors_from_metric(
     *,
     vacuum_fluctuation: float = 0.0,
     measured_T_zz: float = 0.0,
-) -> ShipSensors:
+) -> TelemetrySensors:
     g_eff = g_effective_at_tau(site, tau, par.tau_crit, par.delta_tau)
-    return ShipSensors(
+    return TelemetrySensors(
         vacuum_fluctuation=vacuum_fluctuation,
         det_g_eff=det_4x4(g_eff),
         measured_T_zz=measured_T_zz,
@@ -201,7 +201,7 @@ def sensors_from_metric(
 def control_metric_transition(
     z_pos: float,
     t_actual: float,
-    sensors: ShipSensors,
+    sensors: TelemetrySensors,
     T_measured: Tensor,
     pid: AdaptivePid,
     par: TransitionParameters,

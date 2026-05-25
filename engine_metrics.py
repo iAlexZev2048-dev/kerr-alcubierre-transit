@@ -1,6 +1,6 @@
 """
 Explicit Kerr (Boyer–Lindquist) and Alcubierre metrics in a shared chart (t, x, y, z)
-for Ship B's co-moving frame, plus a sweep of det(g_eff) during the ψ-ramp.
+for the co-moving frame, plus a sweep of det(g_eff) during the ψ-ramp.
 Geometrized units: G = c = 1.
 """
 
@@ -207,9 +207,9 @@ class InjectionSite:
         return self.r_factor * kerr_outer_horizon(self.mass, self.spin)
 
 
-def metrics_in_ship_chart(site: InjectionSite) -> tuple[Matrix4, Matrix4]:
+def metrics_in_local_chart(site: InjectionSite) -> tuple[Matrix4, Matrix4]:
     """
-    Returns (g_Kerr, g_Alc) in coordinates (t, x, y, z) of the co-moving frame.
+    Returns (g_Kerr, g_Alc) in coordinates (t, x, y, z) of the co-moving observer.
     """
     g_bl = kerr_boyer_lindquist(site.r, site.theta, mass=site.mass, spin=site.spin)
     j = jacobian_bl_to_cartesian(site.r, site.theta, site.phi)
@@ -231,7 +231,7 @@ def g_effective_at_tau(
     tau_crit: float,
     delta_tau: float,
 ) -> Matrix4:
-    g_k, g_a = metrics_in_ship_chart(site)
+    g_k, g_a = metrics_in_local_chart(site)
     return blend_metric(g_k, g_a, tau, tau_crit, delta_tau)
 
 
@@ -254,7 +254,7 @@ def sweep_transition(
     delta_tau_values: Iterable[float],
     tau_crit: float = 0.0,
 ) -> Iterator[SweepSample]:
-    g_k, g_a = metrics_in_ship_chart(site)
+    g_k, g_a = metrics_in_local_chart(site)
     det_k = det_4x4(g_k)
     det_a = det_4x4(g_a)
     for dtau in delta_tau_values:
@@ -334,7 +334,7 @@ def run_default_sweep(output: Path | None = None) -> dict[str, object]:
         all_samples.extend(sweep_transition(site, grid, [dtau], tau_crit=tau_crit))
 
     summary = summarize_sweep(all_samples)
-    g_k, g_a = metrics_in_ship_chart(site)
+    g_k, g_a = metrics_in_local_chart(site)
     report: dict[str, object] = {
         "site": {
             "r": site.r,
@@ -361,7 +361,7 @@ def run_default_sweep(output: Path | None = None) -> dict[str, object]:
 def print_report(report: dict[str, object]) -> None:
     site = report["site"]
     assert isinstance(site, dict)
-    print("=== Metrics in chart (t, x, y, z) - Ship B ===")
+    print("=== Metrics in local chart (t, x, y, z) ===")
     print(f"  r = {site['r']:.6f}  (factor {InjectionSite().r_factor} x r_plus)")
     print(f"  theta = {site['theta']:.4f} rad,  phi = {site['phi']:.4f} rad")
     print(f"  M = {site['mass']},  a = {site['spin']}")

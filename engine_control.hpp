@@ -1,5 +1,5 @@
 /**
- * Phase 3 — Effective metric stabilization (Ship B).
+ * Phase 3 — Effective metric stabilization (Co-moving Frame).
  * Adaptive PID loop + Kerr → Alcubierre handover via ψ(z).
  * Arbitrary units; link real sensors in flight implementation.
  */
@@ -59,7 +59,7 @@ inline double z_from_tau(double tau, double tau_crit, double delta_tau) {
     return 2.0 * (tau - tau_crit) / delta_tau;
 }
 
-struct ShipSensors {
+struct TelemetrySensors {
     double vacuum_fluctuation{0.0};   // Hawking proxy
     double scalar_curvature{0.0};    // |R| or proxy
     double det_g_eff{1.0};
@@ -120,7 +120,7 @@ inline Tensor T_alcubierre_nominal() {
     return {-5.0e4, -2.0e4, -2.0e4, -3.0e4, 0.0}; // exotic matter
 }
 
-inline double sensor_vacuum_fluctuations(const ShipSensors& s) {
+inline double sensor_vacuum_fluctuations(const TelemetrySensors& s) {
     return s.vacuum_fluctuation;
 }
 
@@ -142,13 +142,13 @@ inline double ballast_rate_from_dpsi(double dpsi_dtau, double gain = 1.0e2) {
 }
 
 // Topological stability: range of the differential F_* ≈ det ≠ 0 and bounded T_zz
-inline bool is_map_stable(const ShipSensors& s) {
+inline bool is_map_stable(const TelemetrySensors& s) {
     return std::abs(s.det_g_eff) > MIN_DET_G
         && s.jacobian_ranking >= 3.5
         && std::abs(s.measured_T_zz) < Z_DIVERGENCE_LIMIT;
 }
 
-inline bool is_z_axis_diverging(const ShipSensors& s) {
+inline bool is_z_axis_diverging(const TelemetrySensors& s) {
     return std::abs(s.measured_T_zz) >= Z_DIVERGENCE_LIMIT
         || std::abs(s.det_g_eff) < MIN_DET_G;
 }
@@ -169,7 +169,7 @@ inline void adjust_orthogonal_axis(double& z_shape, double factor = DEFAULT_Z_CO
 inline ControlOutput control_metric_transition(
     double z_pos,
     double /*t_actual*/,
-    const ShipSensors& sensors,
+    const TelemetrySensors& sensors,
     const Tensor& T_measured,
     AdaptivePid& pid,
     TransitionParameters p,

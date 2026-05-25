@@ -21,3 +21,12 @@ engine_config.json
 *.jpeg
 *.png
 *.gif
+
+# Ebook and literary files (to keep Zenodo strictly scientific)
+generate_umbral.py
+El_Umbral.*
+*.epub
+*.docx
+*.txt
+*.pdf
+

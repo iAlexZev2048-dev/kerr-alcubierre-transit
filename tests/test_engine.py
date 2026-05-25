@@ -11,10 +11,10 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from metric_transition import psi, psi_prime, det_4x4, blend_metric, z_phase
-from engine_metrics import InjectionSite, metrics_in_ship_chart, g_effective_at_tau
+from engine_metrics import InjectionSite, metrics_in_local_chart, g_effective_at_tau
 from einstein_proxy import T_from_g, energy_conditions
 from tau_crit import detect_tau_crit, evaluate_causal_state
-from engine_phases import CausalEngine, Phase, EngineConfig
+from engine_phases import TransitionSimulation, Phase, EngineConfig
 from energy_budget import evaluate_budget
 
 
@@ -32,7 +32,7 @@ class TestBump(unittest.TestCase):
 
 class TestMetrics(unittest.TestCase):
     def test_det_kerr_nonzero(self):
-        g_k, _ = metrics_in_ship_chart(InjectionSite())
+        g_k, _ = metrics_in_local_chart(InjectionSite())
         self.assertNotAlmostEqual(det_4x4(g_k), 0.0)
 
     def test_g_eff_finite_in_ramp(self):
@@ -53,7 +53,7 @@ class TestTauCrit(unittest.TestCase):
 
 class TestPhases(unittest.TestCase):
     def test_advances_from_calibration(self):
-        m = CausalEngine(EngineConfig())
+        m = TransitionSimulation(EngineConfig())
         m.phase = Phase.CALIBRATION
         cmd = m.step(tau=0.0)
         self.assertIn(cmd.phase, (Phase.CALIBRATION, Phase.DESCENT, Phase.ABORT))

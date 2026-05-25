@@ -10,7 +10,7 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 
 from engine_control import ranking_from_metric
-from engine_metrics import InjectionSite, metrics_in_ship_chart, run_default_sweep
+from engine_metrics import InjectionSite, metrics_in_local_chart, run_default_sweep
 from metric_transition import blend_metric
 
 ROOT = Path(__file__).resolve().parent
@@ -58,7 +58,7 @@ def calibrate_from_rows(rows: list[dict[str, float]]) -> CalibratedThresholds:
 
     ranking_vals = []
     site = InjectionSite()
-    g_k, g_a = metrics_in_ship_chart(site)
+    g_k, g_a = metrics_in_local_chart(site)
 
     for r in rows[:20]:
         g = blend_metric(g_k, g_a, r["tau"], 0.0, r["delta_tau"])
