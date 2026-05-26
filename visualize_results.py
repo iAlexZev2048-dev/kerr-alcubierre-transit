@@ -1,5 +1,5 @@
 """
-Sci-Fi Telemetry Visualizer for the Causal Engine.
+Telemetry Visualizer for the Causal Engine Simulation.
 Uses only the standard library (Tkinter) to draw plots without dependencies.
 """
 
@@ -63,7 +63,7 @@ class TelemetryVisualizer:
         label.pack(expand=True)
 
     def setup_ui(self) -> None:
-        # Sci-Fi terminal style title
+        # Terminal-style status bar title
         title_frame = tk.Frame(self.root, bg="#0d0e15", bd=0)
         title_frame.pack(fill=tk.X, pady=10, padx=20)
 
